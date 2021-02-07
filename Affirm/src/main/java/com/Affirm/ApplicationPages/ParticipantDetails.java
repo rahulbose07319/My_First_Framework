@@ -38,101 +38,125 @@ public class ParticipantDetails extends WebDriverInitialization {
 	public static WebElement citizenship;
 	@FindBy(xpath = "//input[@id='ctl08_ctl02_ctl02_ctl06_ctl03_ctl01_ctl01_ctl04_sb1x20_1']")
 	public static WebElement active_military;
-	
-	//For NQ Trust, QPDB/QPDC
+
+	// For NQ Trust, QPDB/QPDC
 	@FindBy(xpath = "//input[@id='ctl08_ctl02_ctl02_ctl06_ctl03_ctl02_ctl01_ctl05_sb1x1']")
 	public static WebElement bene_percentage_trust;
-	@FindBy(xpath = "//input[@id='ctl08_ctl02_ctl02_ctl06_ctl03_ctl02_ctl01_ctl05_sb1x2']")
+	@FindBy(xpath = "(//input[@helptext='Enter the nine-digit U.S. issued government ID (SSN or Tax ID).  Separating hyphens are optional.'])[2]")
 	public static WebElement taxid_trust;
-	@FindBy(xpath = "//input[@id='ctl08_ctl02_ctl02_ctl06_ctl03_ctl02_ctl01_ctl05_sb1x3']")
+	@FindBy(xpath = "(//input[@helptext='Date the organization was established.'])")
 	public static WebElement trust_date;
 	@FindBy(xpath = "//select[@id='ctl08_ctl02_ctl02_ctl06_ctl03_ctl02_ctl01_ctl05_sb1x0']")
 	public static WebElement rltn_ann_trust;
-	@FindBy(xpath = "//input[@id='ctl08_ctl02_ctl02_ctl06_ctl03_ctl02_ctl01_ctl05_sb1x5']")
+	@FindBy(xpath = "(//input[@helptext='Enter the first line of address'])[2]")
 	public static WebElement add_line1_trust;
-	@FindBy(xpath = "//input[@id='ctl08_ctl02_ctl02_ctl06_ctl03_ctl02_ctl01_ctl05_sb1x7']")
+	@FindBy(xpath = "(//input[@helptext='Enter the City'])[2]")
 	public static WebElement city_trust;
-	@FindBy(xpath = "//select[@id='ctl08_ctl02_ctl02_ctl06_ctl03_ctl02_ctl01_ctl05_sb1x8']")
+	@FindBy(xpath = "(//select[@helptext='Select State or Jurisdiction'])[2]")
 	public static WebElement state_trust;
-	@FindBy(xpath = "//select[@id='ctl08_ctl02_ctl02_ctl06_ctl03_ctl02_ctl01_ctl05_sb1x9']")
+	@FindBy(xpath = "(//select[@helptext='Enter the Country of the person. Normally United States.'])[2]")
 	public static WebElement country_trust;
-	@FindBy(xpath = "//input[@id='ctl08_ctl02_ctl02_ctl06_ctl03_ctl02_ctl01_ctl05_sb1x10']")
+	@FindBy(xpath = "(//input[@helptext='Enter Zip Code'])[2]")
 	public static WebElement zip_trust;
-	@FindBy(xpath = "//select[@id='ctl08_ctl02_ctl02_ctl06_ctl03_ctl02_ctl01_ctl05_sb1x15']")
+	@FindBy(xpath = "(//select[@helptext='Residence or Domicile Country'])")
 	public static WebElement domicile;
 
 	public void execute() {
 		System.out.println("Affirm Participant details page started");
 
 		try {
-			excelfield = "Total number of Participants";
+			excelfield = "Total_number_of_Natural_Participants";
+			String stemp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name,
+					"ParticipantDetails");
+			int number_of_participants = Integer.parseInt(stemp);
+
+			// For NQ Trust, QPDB/QPDC
+			excelfield = "Non-Natural_Owner";
 			temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "ParticipantDetails");
-			int number_of_participants = Integer.parseInt(temp);
-			
-			//For NQ Trust, QPDB/QPDC
-			excelfield = "Non-Natural Owner";
-			temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "ParticipantDetails");
-			if(temp.equalsIgnoreCase("Yes")) {
-				
-				excelfield = "Beneficiary% for Trust";
-				temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "ParticipantDetails");
-				bene_percentage_trust.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-				WebDriverInitialization.uiopt.sendKeys(temp, bene_percentage_trust, excelfield);
-				
-				excelfield = "Relationship to Annuitant";
-				temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "ParticipantDetails");
-				WebDriverInitialization.uiopt.dropdown(temp, rltn_ann_trust, excelfield);
-				
-				excelfield = "TAX ID";
-				temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "ParticipantDetails");
-				if(temp!=null) {
-				taxid_trust.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-				WebDriverInitialization.uiopt.sendKeys(temp, taxid_trust, excelfield);
+			if (temp.equalsIgnoreCase("Yes")) {
+
+				excelfield = "Is-Custodian_Present";
+				temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name,
+						"ParticipantDetails");
+				if (temp.equalsIgnoreCase("Yes")) {
+
+					excelfield = "Relationship_to_Annuitant";
+					temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name,
+							"ParticipantDetails");
+					WebDriverInitialization.uiopt.dropdown(temp, rltn_ann_trust, excelfield);
+
+					excelfield = "Domicile";
+					temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name,
+							"ParticipantDetails");
+					WebDriverInitialization.uiopt.dropdown(temp, domicile, excelfield);
+				} else {
+
+					excelfield = "Address_Line1_Trust";
+					temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name,
+							"ParticipantDetails");
+					WebDriverInitialization.uiopt.sendKeys(temp, add_line1_trust, excelfield);
+
+					excelfield = "City_Trust";
+					temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name,
+							"ParticipantDetails");
+					WebDriverInitialization.uiopt.sendKeys(temp, city_trust, excelfield);
+
+					excelfield = "ZIP_Trust";
+					temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name,
+							"ParticipantDetails");
+					WebDriverInitialization.uiopt.sendKeys(temp, zip_trust, excelfield);
+
+					excelfield = "State_Trust";
+					temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name,
+							"ParticipantDetails");
+					WebDriverInitialization.uiopt.dropdown(temp, state_trust, excelfield);
+
+					excelfield = "Country_Trust";
+					temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name,
+							"ParticipantDetails");
+					WebDriverInitialization.uiopt.dropdown(temp, country_trust, excelfield);
+
+					excelfield = "Domicile";
+					temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name,
+							"ParticipantDetails");
+					WebDriverInitialization.uiopt.dropdown(temp, domicile, excelfield);
+
+					excelfield = "Beneficiary%_for_Trust";
+					temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name,
+							"ParticipantDetails");
+					bene_percentage_trust.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+					WebDriverInitialization.uiopt.sendKeys(temp, bene_percentage_trust, excelfield);
+
+					excelfield = "Relationship_to_Annuitant";
+					temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name,
+							"ParticipantDetails");
+					WebDriverInitialization.uiopt.dropdown(temp, rltn_ann_trust, excelfield);
+
+					excelfield = "TAX_ID";
+					temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name,
+							"ParticipantDetails");
+					if (temp.equalsIgnoreCase("None")) {
+
+					} else {
+						taxid_trust.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+						WebDriverInitialization.uiopt.sendKeys(temp, taxid_trust, excelfield);
+					}
+
+					excelfield = "Trust_Date";
+					temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name,
+							"ParticipantDetails");
+					if (temp.equalsIgnoreCase("None")) {
+
+					} else {
+						trust_date.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+						WebDriverInitialization.uiopt.sendKeys(temp, trust_date, excelfield);
+					}
+
 				}
-				
-				excelfield = "Trust Date";
-				temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "ParticipantDetails");
-				if(temp!=null) {
-					trust_date.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-					WebDriverInitialization.uiopt.sendKeys(temp, trust_date, excelfield);
-				}
-				
-				excelfield = "Address Line1 Trust";
-				temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "ParticipantDetails");
-				if(temp!=null) {
-				WebDriverInitialization.uiopt.sendKeys(temp, add_line1_trust, excelfield);
-				}
-				
-				excelfield = "City Trust";
-				temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "ParticipantDetails");
-				if(temp!=null) {
-				WebDriverInitialization.uiopt.sendKeys(temp, city_trust, excelfield);
-				}
-				
-				excelfield = "ZIP Trust";
-				temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "ParticipantDetails");
-				if(temp!=null) {
-				WebDriverInitialization.uiopt.sendKeys(temp, zip_trust, excelfield);
-				}
-				
-				excelfield = "State Trust";
-				temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "ParticipantDetails");
-				if(temp!=null) {
-				WebDriverInitialization.uiopt.dropdown(temp, state_trust, excelfield);
-				}
-				
-				excelfield = "Country Trust";
-				temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "ParticipantDetails");
-				if(temp!=null) {
-				WebDriverInitialization.uiopt.dropdown(temp, country_trust, excelfield);
-				}
-				
-				excelfield = "Domicile";
-				temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "ParticipantDetails");
-				WebDriverInitialization.uiopt.dropdown(temp, domicile, excelfield);
+
 			}
 
-			excelfield = "Address Line1";
+			excelfield = "Address_Line1";
 			temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "ParticipantDetails");
 			WebDriverInitialization.uiopt.sendKeys(temp, add_line1, excelfield);
 
@@ -158,18 +182,24 @@ public class ParticipantDetails extends WebDriverInitialization {
 
 			// Active Military question is marked as No for Owner.
 			WebDriverInitialization.uiopt.clickByJavaScript(active_military);
-			
+
 			// Employer Name for SEP IRA
-			excelfield = "Employer Name";
+			excelfield = "Employer_Name";
 			temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "ParticipantDetails");
-			WebElement empname= driver.findElement(By.xpath("//input[@id='ctl08_ctl02_ctl02_ctl06_ctl03_ctl01_ctl01_ctl04_sb1x20']"));
-			WebDriverInitialization.uiopt.sendKeys(temp, empname, excelfield);
+			if (temp.equalsIgnoreCase("None")) {
+
+				System.out.println("Do nothing");
+			} else {
+				WebElement empname = driver
+						.findElement(By.xpath("//input[@id='ctl08_ctl02_ctl02_ctl06_ctl03_ctl01_ctl01_ctl04_sb1x20']"));
+				WebDriverInitialization.uiopt.sendKeys(temp, empname, excelfield);
+			}
 
 			String excelfield1 = "Gender";
 			temp = ExcelSheetOperation.getCellData(excelfield1, WebDriverInitialization.TC_Name, "ParticipantDetails");
 			String[] Gender = temp.split(",");
 
-			String excelfield2 = "Date of Birth";
+			String excelfield2 = "Date_of_Birth";
 			temp = ExcelSheetOperation.getCellData(excelfield2, WebDriverInitialization.TC_Name, "ParticipantDetails");
 			String[] Birth = temp.split(",");
 
@@ -177,19 +207,19 @@ public class ParticipantDetails extends WebDriverInitialization {
 			temp = ExcelSheetOperation.getCellData(excelfield3, WebDriverInitialization.TC_Name, "ParticipantDetails");
 			String[] SSN = temp.split(",");
 
-			String excelfield4 = "Relationship To Owner";
+			String excelfield4 = "Relationship_To_Owner";
 			temp = ExcelSheetOperation.getCellData(excelfield4, WebDriverInitialization.TC_Name, "ParticipantDetails");
 			String[] rltnship = temp.split(",");
 
-			String excelfield5 = "Beneficiary %";
+			String excelfield5 = "Beneficiary%";
 			temp = ExcelSheetOperation.getCellData(excelfield5, WebDriverInitialization.TC_Name, "ParticipantDetails");
 			String[] bene_percent = temp.split(",");
 
-			excelfield = "Active Military Other Than Owner";
+			excelfield = "Active_Military_Other_Than_Owner";
 			temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "ParticipantDetails");
 			String[] active_military_other = temp.split(",");
 
-			excelfield = "Address As Owner";
+			excelfield = "Address_As_Owner";
 			temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "ParticipantDetails");
 			String[] addr = temp.split(",");
 
@@ -206,25 +236,26 @@ public class ParticipantDetails extends WebDriverInitialization {
 			}
 
 			// e-delivery selection
-			excelfield = "Consent for E-Delivery";
+			excelfield = "Consent_for_E-Delivery";
 			temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "ParticipantDetails");
 			if (temp.equalsIgnoreCase("Yes")) {
 				WebElement edel_yes = driver.findElement(
 						By.xpath("//input[@id='ctl08_ctl02_ctl02_ctl06_ctl03_ctl01_ctl01_ctl08_ctl03_sb1x0_1']"));
 				WebDriverInitialization.uiopt.clickByJavaScript(edel_yes);
+				Thread.sleep(2000);
 
-				excelfield = "E-Del Email Type";
+				excelfield = "E-Del_Email_Type";
 				temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name,
 						"ParticipantDetails");
-				WebElement edel_email_type = driver.findElement(
-						By.xpath("//select[@id='ctl08_ctl02_ctl02_ctl06_ctl03_ctl01_ctl01_ctl08_ctl04_sb1x0']"));
+				WebElement edel_email_type = driver.findElement(By.xpath(
+						"(//select[@helptext='Select e-mail type; &#39;business&#39; or &#39;personal&#39;.'])[2]"));
 				WebDriverInitialization.uiopt.dropdown(temp, edel_email_type, excelfield);
 
-				excelfield = "E-del Email address";
+				excelfield = "E-del_Email_address";
 				temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name,
 						"ParticipantDetails");
-				WebElement edel_email_add = driver.findElement(
-						By.xpath("//input[@id='ctl08_ctl02_ctl02_ctl06_ctl03_ctl01_ctl01_ctl08_ctl04_sb1x1']"));
+				WebElement edel_email_add = driver
+						.findElement(By.xpath("(//input[@helptext='Enter the e-mail address of participant.'])[2]"));
 				WebDriverInitialization.uiopt.sendKeys(temp, edel_email_add, excelfield);
 
 			} else {
@@ -234,14 +265,14 @@ public class ParticipantDetails extends WebDriverInitialization {
 			}
 
 			// Consent for electronic signature
-			excelfield = "Consent for E-sign";
+			excelfield = "Consent_for_E-sign";
 			temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "ParticipantDetails");
 			if (temp.equalsIgnoreCase("Yes")) {
 				WebElement esign_yes = driver.findElement(
 						By.xpath("//input[@id='ctl08_ctl02_ctl02_ctl06_ctl03_ctl01_ctl01_ctl05_ctl02_sb1x0_0']"));
 				WebDriverInitialization.uiopt.clickByJavaScript(esign_yes);
 
-				excelfield = "Signature Method";
+				excelfield = "Signature_Method";
 				temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name,
 						"ParticipantDetails");
 				if (temp.equalsIgnoreCase("Remote")) {
@@ -254,27 +285,27 @@ public class ParticipantDetails extends WebDriverInitialization {
 					WebDriverInitialization.uiopt.clickByJavaScript(Inperson);
 				}
 
-				excelfield = "E-mail Type";
+				excelfield = "E-mail_Type";
 				temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name,
 						"ParticipantDetails");
-				WebElement email_type = driver.findElement(
-						By.xpath("//select[@id='ctl08_ctl02_ctl02_ctl06_ctl03_ctl01_ctl01_ctl04_sb1x16']"));
+				WebElement email_type = driver.findElement(By.xpath(
+						"(//select[@helptext='Select e-mail type; &#39;business&#39; or &#39;personal&#39;.'])[1]"));
 				WebDriverInitialization.uiopt.dropdown(temp, email_type, excelfield);
 
-				excelfield = "E-mail address";
+				excelfield = "E-mail_address";
 				temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name,
 						"ParticipantDetails");
 				WebElement email_add = driver
-						.findElement(By.xpath("//input[@id='ctl08_ctl02_ctl02_ctl06_ctl03_ctl01_ctl01_ctl04_sb1x17']"));
+						.findElement(By.xpath("(//input[@helptext='Enter the e-mail address of participant.'])[1]"));
 				WebDriverInitialization.uiopt.sendKeys(temp, email_add, excelfield);
 
 			} else {
 				WebElement esign_no = driver.findElement(
-						By.xpath("//input[@id='ctl08_ctl02_ctl02_ctl06_ctl03_ctl03_ctl01_ctl05_ctl02_sb0x0_0']"));
+						By.xpath("//input[@id='ctl08_ctl02_ctl02_ctl06_ctl03_ctl01_ctl01_ctl05_ctl02_sb1x0_1']"));
 				WebDriverInitialization.uiopt.clickByJavaScript(esign_no);
 			}
 
-			// Iterate through the number of participants to enter data 
+			// Iterate through the number of participants to enter data
 			for (int i = 0; i < number_of_participants; i++) {
 				int j = i + 1;
 				int k = i + 2;
@@ -293,29 +324,37 @@ public class ParticipantDetails extends WebDriverInitialization {
 				WebDriverInitialization.uiopt.sendKeys(SSN[i], ssn, excelfield3);
 
 				// Relationship to owner for n-1 participants
-				if (rltnship[i] != null) {
+				if (rltnship[i].equalsIgnoreCase("None")) {
+				}
+
+				else {
 					WebElement relation = driver.findElement(
 							By.xpath("//select[@id='ctl08_ctl02_ctl02_ctl06_ctl03_ctl01_ctl0" + k + "_ctl04_sb1x0']"));
 					WebDriverInitialization.uiopt.dropdown(rltnship[i], relation, excelfield4);
 				}
 
 				// address same as owner for n-1 participants
-				if (addr[i] != null) {
+				if (addr[i].equalsIgnoreCase("None")) {
+				}
+
+				else {
 					WebElement sameaddress = driver.findElement(
 							By.xpath("//input[@id='ctl08_ctl02_ctl02_ctl06_ctl03_ctl01_ctl0" + k + "_ctl04_sb1x6']"));
 					WebDriverInitialization.uiopt.clickByJavaScript(sameaddress);
 				}
 
 				// Beneficiary percentage
-				if(bene_percent[i]!=null) {
-				WebElement bene_percentage = driver.findElement(
-						By.xpath("//input[@id='ctl08_ctl02_ctl02_ctl06_ctl03_ctl01_ctl0" + k + "_ctl04_sb1x4']"));
-				bene_percentage.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-				WebDriverInitialization.uiopt.sendKeys(bene_percent[i], bene_percentage, excelfield5);
+				if (bene_percent[i].equalsIgnoreCase("None")) {
+				} else {
+					WebElement bene_percentage = driver.findElement(
+							By.xpath("//input[@id='ctl08_ctl02_ctl02_ctl06_ctl03_ctl01_ctl0" + k + "_ctl04_sb1x4']"));
+					bene_percentage.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+					WebDriverInitialization.uiopt.sendKeys(bene_percent[i], bene_percentage, excelfield5);
 				}
 
 				// Active military other than Owner
-				if (active_military_other[i] != null) {
+				if (active_military_other[i].equalsIgnoreCase("None")) {
+				} else {
 					WebElement act_milt_oth = driver.findElement(By
 							.xpath("//input[@id='ctl08_ctl02_ctl02_ctl06_ctl03_ctl01_ctl0" + k + "_ctl04_sb1x22_1']"));
 					WebDriverInitialization.uiopt.clickByJavaScript(act_milt_oth);

@@ -35,23 +35,23 @@ public class FeatureDetails extends WebDriverInitialization {
 
 		try {
 
-			excelfield = "Prot Allocation";
+			excelfield = "Prot_Allocation";
 			temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "FeatureDetails");
 			if (temp.equalsIgnoreCase("Yes")) {
 				WebDriverInitialization.uiopt.clickByJavaScript(prot_allocation);
 
 			}
-			excelfield = "Perf Allocation";
+			excelfield = "Perf_Allocation";
 			temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "FeatureDetails");
 			if (temp.equalsIgnoreCase("Yes")) {
 				WebDriverInitialization.uiopt.clickByJavaScript(perf_allocation);
 
 			}
-			excelfield = "RB Frequency";
+			excelfield = "RB_Frequency";
 			temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "FeatureDetails");
-			if (temp != null) {
-				WebDriverInitialization.uiopt.dropdown(temp, RB_freq, excelfield);
-			}
+			if (temp.equalsIgnoreCase("None")) {}
+				
+			else {WebDriverInitialization.uiopt.dropdown(temp, RB_freq, excelfield);}
 
 			WebDriverInitialization.uiopt.clickByJavaScript(next_btn);
 			new CustomWait(driver).waitForPageLoad();

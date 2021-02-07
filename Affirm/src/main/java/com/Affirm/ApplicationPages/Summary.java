@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import utils.CustomWait;
+import utils.FileHandling;
 import utils.WebDriverInitialization;
 
 public class Summary extends WebDriverInitialization{
@@ -35,7 +36,7 @@ public class Summary extends WebDriverInitialization{
 	public static WebElement submit;
 	@FindBy(xpath = "//span[@class='ui-icon ui-icon-closethick' and text()='close']")
 	public static WebElement submit_confirmation;
-	@FindBy(xpath = "//input[@value='View Selected ']")
+	@FindBy(xpath = "//input[@id='ctl08_ctl02_ctl02_ctl06_ctl02_ctl02_ViewSelectedForms']")
 	public static WebElement view_selected;
 	
 	
@@ -43,6 +44,7 @@ public class Summary extends WebDriverInitialization{
 		System.out.println("Order Summary Page");
 
 		try {
+			
 			
 			WebDriverInitialization.uiopt.click(order_summary_report);
 			Thread.sleep(2000);
@@ -54,11 +56,12 @@ public class Summary extends WebDriverInitialization{
 			new CustomWait(driver).waitForPageLoad();
 			WebDriverInitialization.uiopt.click(submit_confirmation);
 			Thread.sleep(2000);
-			WebDriverInitialization.uiopt.click(view_selected);
-			Thread.sleep(2000);
+			WebDriverInitialization.uiopt.clickByJavaScript(view_selected);
+			//WebDriverInitialization.uiopt.click(view_selected);
+			Thread.sleep(4000);
+			new FileHandling();
 			
-			utils.FileHandling.fileRname();
-		
+			
 			
 		}catch(Exception e) {
 			System.out.println("File is not downloaded sucessfully. Please check the error -->>" +e.getMessage());

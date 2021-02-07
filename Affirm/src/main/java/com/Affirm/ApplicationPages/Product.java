@@ -52,7 +52,7 @@ public class Product extends WebDriverInitialization {
 			excelfield = "Solicitation_State";
 			temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "Product");
 			WebDriverInitialization.uiopt.dropdown(temp, solicitation_state, excelfield);
-			if (temp.equalsIgnoreCase("FL")) {
+			if (temp.equalsIgnoreCase("Florida")) {
 				excelfield = "County";
 				String temp_county = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name,
 						"Product");
@@ -77,12 +77,12 @@ public class Product extends WebDriverInitialization {
 			// click on next button
 			WebDriverInitialization.uiopt.clickByJavaScript(next_btn);
 			new CustomWait(driver).waitForPageLoad();
-			By Temp = By.xpath("//div[@class='ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix']");
+			By Temp = By.xpath("//span[@class='ui-icon ui-icon-closethick' and text()='close']");
 			Boolean result = new CustomWait(driver).alertMsgToBeClickable(Temp);
 
-			if (result.equals(true)) {
+			if (result) {
 				WebElement warning_msg = driver.findElement(By
-						.xpath("//div[@class='ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix']"));
+						.xpath("//span[@class='ui-icon ui-icon-closethick' and text()='close']"));
 				WebDriverInitialization.uiopt.clickByJavaScript(warning_msg);
 				WebDriverInitialization.uiopt.clickByJavaScript(next_btn);
 				new CustomWait(driver).waitForPageLoad();

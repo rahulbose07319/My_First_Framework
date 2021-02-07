@@ -24,55 +24,66 @@ public class SubAccounts extends WebDriverInitialization {
 
 	@FindBy(xpath = "//input[@value='Next >>' and @class='NEXTButton' and @title='Go to Next Section']")
 	public static WebElement next_btn;
-
+	
 	// For RC when Prot and Perf is selected
 	@FindBy(xpath = "//td[text()='Protected Benefit Account Investment Options']//following-sibling::*/input")
 	WebElement prot_fund;
 	@FindBy(xpath = "//td[text()='Investment Account Investment Options']//following-sibling::*/input")
 	WebElement perf_fund;
+
 	
-	// For warning message
-	@FindBy(xpath = "//span[@class='ui-icon ui-icon-closethick' and text()='close']")
-	WebElement fund_msg;
 
 	public void execute() throws Exception {
 		System.out.println("Affirm SubAccounts page started");
 
 		try {
 
-			excelfield = "Prot Percentage";
+			excelfield = "Prot_Percentage";
 			temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "SubAccounts");
-			if (temp != null) {
-				
+			if (temp.equalsIgnoreCase("None")) {
+			}
+
+			else {
 				WebDriverInitialization.uiopt.sendKeys(temp, prot_fund, excelfield);
 			}
-			
-			excelfield = "Perf Percentage";
+
+			excelfield = "Perf_Percentage";
 			temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "SubAccounts");
-			if (temp != null) {
-				
+			if (temp.equalsIgnoreCase("None")) {
+			} else {
+
 				WebDriverInitialization.uiopt.sendKeys(temp, perf_fund, excelfield);
 			}
-			
+
 			excelfield = "Funds";
 			temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "SubAccounts");
 			String[] fund_name = temp.split(",");
+
+			excelfield = "Funds_Percentage";
+			temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "SubAccounts");
+			String[] fund_percent = temp.split(",");
 			for (int i = 0; i < fund_name.length; i++) {
 
-				if (fund_name[i] != null) {
-					WebElement funds = driver
-							.findElement(By.xpath("//td[text()='" + fund_name[i] + "']//following-sibling::*/input"));
-					WebDriverInitialization.uiopt.sendKeys(fund_name[i], funds, excelfield);
-				}
+				WebElement funds = driver
+						.findElement(By.xpath("//td[text()='" + fund_name[i] + "']//following-sibling::*/input"));
+				WebDriverInitialization.uiopt.sendKeys(fund_percent[i], funds, excelfield);
+
 			}
-			
-			if(fund_msg.isDisplayed()) {
-				WebDriverInitialization.uiopt.clickByJavaScript(fund_msg);
+
+			// Warning message on funds page
+			By msg= By.xpath("//span[@class='ui-icon ui-icon-closethick' and text()='close']");
+			Boolean result= new CustomWait(driver).alertMsgToBeClickable(msg);
+			if(result) {
+				WebElement alert= driver.findElement(By.xpath("//span[@class='ui-icon ui-icon-closethick' and text()='close']"));
+				WebDriverInitialization.uiopt.clickByJavaScript(alert);
+				new CustomWait(driver).waitForPageLoad();
 			}
 
 			WebDriverInitialization.uiopt.clickByJavaScript(next_btn);
 			new CustomWait(driver).waitForPageLoad();
 			System.out.println("SubAccounts page completed");
+			WebDriverInitialization.uiopt.clickByJavaScript(next_btn);
+			new CustomWait(driver).waitForPageLoad();
 		} catch (Exception e) {
 			System.out.println("Please check your data entry-->>" + e.getMessage());
 		}

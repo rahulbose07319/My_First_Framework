@@ -90,6 +90,10 @@ public class ExcelSheetOperation extends WebDriverInitialization{
 			if(colvalue.getStringCellValue().equalsIgnoreCase(TC_Name)) {
 				Cell cell_for_column_row = row.getCell(colIndex);// with the help of colIndex we will get the cell for which the value needs to be obtained.
 //Identify whether the cell type is numeric or string
+//				if(cell_for_column_row.getStringCellValue()==null) {
+//					cellvalue=null;
+//				}
+				
 				CellType type= cell_for_column_row.getCellType();
 				switch(type) {
 				case NUMERIC:

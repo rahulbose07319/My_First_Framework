@@ -38,23 +38,23 @@ public class FinancialAdvisor extends WebDriverInitialization {
 		System.out.println("Affirm Financial Advisor page started");
 		try {
 			excelfield = "Rep_ID";
-			temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "Financial_Advisor");
+			temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "FinancialAdvisor");
 			WebDriverInitialization.uiopt.sendKeys(temp, Advisor_Id, excelfield);
 
 			excelfield = "Advisor_FNAME";
-			temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "Financial_Advisor");
+			temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "FinancialAdvisor");
 			WebDriverInitialization.uiopt.sendKeys(temp, Advisor_Fname, excelfield);
 
 			excelfield = "Advisor_LNAME";
-			temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "Financial_Advisor");
+			temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "FinancialAdvisor");
 			WebDriverInitialization.uiopt.sendKeys(temp, Advisor_Lname, excelfield);
 
 			excelfield = "Advisor_SSN";
-			temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "Financial_Advisor");
+			temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "FinancialAdvisor");
 			WebDriverInitialization.uiopt.sendKeys(temp, Advisor_SSN, excelfield);
 
 			excelfield = "Commission";
-			temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "Financial_Advisor");
+			temp = ExcelSheetOperation.getCellData(excelfield, WebDriverInitialization.TC_Name, "FinancialAdvisor");
 			WebDriverInitialization.uiopt.sendKeys(temp, Advisor_percentage, excelfield);
 
 			WebDriverInitialization.uiopt.clickByJavaScript(nextbtn);

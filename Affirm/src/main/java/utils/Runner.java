@@ -25,6 +25,7 @@ public class Runner {
 			WebDriverInitialization.TC_Name = ar;
 			System.out.println("Test Case" + ar + "started");
 			executeTestCases(WebDriverInitialization.affirmScreenFlow());
+			Thread.sleep(4000);
 			afterTest();
 			System.out.println("Test Case completed successfully");
 		}
@@ -68,6 +69,10 @@ public class Runner {
 
 			case "SubAccounts":
 				new SubAccounts(WebDriverInitialization.driver);
+				break;
+				
+			case "Suitability":
+				new Suitability(WebDriverInitialization.driver);
 				break;
 
 			case "Fulfillment":

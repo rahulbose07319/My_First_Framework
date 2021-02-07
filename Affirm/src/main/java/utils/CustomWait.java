@@ -41,10 +41,10 @@ public class CustomWait {
 		
 	}
 	
-	public Boolean alertMsgToBeClickable(By temp) {
+	public Boolean alertMsgToBeClickable(By msg) {
 		WebDriverWait wait = new WebDriverWait(driver,default_wait_time);
 		try {
-			wait.until(ExpectedConditions.elementToBeClickable(temp));
+			wait.until(ExpectedConditions.elementToBeClickable(msg));
 			return true;
 		}catch(Exception e) {
 			System.out.println("Element is disabled");

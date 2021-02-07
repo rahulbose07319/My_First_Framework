@@ -26,8 +26,8 @@ public class WebDriverInitialization {
 	public static String TC_Name = null;
 
 	public static String[] affirmScreenFlow() {
-		String flow[] = new String[] { "LoginPage", "FinancialAdvisor", "Product", "Funding", "Participants",
-				"ParticipantDetails", "Features", "FeatureDetails", "SubAccounts", "Fulfillment", "Summary" };
+		String flow[] = new String[] { "LoginPage","FinancialAdvisor", "Product", "Funding", "Participants",
+				"ParticipantDetails", "Features", "FeatureDetails", "SubAccounts", "Suitability", "Fulfillment", "Summary" };
 		return flow;
 	}
 
@@ -35,7 +35,7 @@ public class WebDriverInitialization {
 		prop = new Properties();
 
 		try {
-			File location = new File("C:\\Users\\rahul\\eclipse-workspace\\Affirm\\config.properties");
+			File location = new File("C:\\Users\\rahul\\git\\Affirm\\Affirm\\config.properties");
 			FileInputStream fp = new FileInputStream(location);
 			prop.load(fp);
 
@@ -49,7 +49,7 @@ public class WebDriverInitialization {
 		// chrome settings for downloading files without any popup
 		
 		ChromeOptions options = new ChromeOptions();
-		String path= "C:\\Users\\rahul\\eclipse-workspace\\Affirm\\Downloads";
+		String path= "C:\\Users\\rahul\\git\\Affirm\\Affirm\\Downloads";
 		//Path download_folder = Paths.get(System.getProperty("user.home") + "rahul/eclipse-workspace/Affirm/Downloads");
 		
 		Map<String, Object> chromeprefs = new HashMap<String, Object>();

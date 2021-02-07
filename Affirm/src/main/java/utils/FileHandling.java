@@ -19,16 +19,25 @@ public class FileHandling extends WebDriverInitialization {
 	public static File oldfilename;
 	public static File newfilename;
 
-	public FileHandling(WebDriver driver) throws Exception {
-		this.driver = driver;
+	
+
+	public FileHandling() {
+		// TODO Auto-generated constructor stub
+		fileRname();
 	}
 
+
+
 	public static void fileRname() {
-		oldfilename = new File("C:\\Users\\rahul\\eclipse-workspace\\Affirm\\Downloads\\JoinedFile.pdf");
+		System.out.println("**************************************************************************");
+		oldfilename = new File("C:\\Users\\rahul\\git\\Affirm\\Affirm\\Downloads\\JoinedFile.pdf");
 		newfilename = new File(
-				"C:\\Users\\rahul\\eclipse-workspace\\Affirm\\Downloads\\" + WebDriverInitialization.TC_Name + ".pdf");
-		if (oldfilename.renameTo(newfilename))
+				"C:\\Users\\rahul\\git\\Affirm\\Affirm\\Downloads\\" + WebDriverInitialization.TC_Name + "PDF.pdf");
+		Boolean flag= oldfilename.renameTo(newfilename);
+		if (flag)
 			System.out.println("Filename is updated");
+		else
+			System.out.println("File Rename failed");
 
 	}
 
