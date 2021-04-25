@@ -10,6 +10,7 @@ import uioperation.UIOperation;
 import utils.WebDriverInitialization;
 
 public class LoginPage extends WebDriverInitialization {
+	/* This class is used to login Affirm application*/
 
 	public String excelfield = "";
 	public String temp = "";
